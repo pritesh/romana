@@ -11,7 +11,7 @@ spec:
         app: romana-services
     spec:
       nodeSelector:
-        kubeadm.alpha.kubernetes.io/role: master
+        kubernetes.io/hostname: ip-192-168-99-10
       hostNetwork: true
       containers:
       - name: romana-etcd
@@ -41,10 +41,12 @@ spec:
         - name: mysql-data
           mountPath: /var/lib/mysql
       - name: romana-services
-        image: quay.io/romana/services:v0.9.8.1
+        image: cgilmour/romana-services:v0.9.3.6
         imagePullPolicy: Always
         args:
-        - --cidr=100.112.0.0/12
+        - --cidr=100.112.0.0/16
+        - --namespaces=2
+        - --segments=2
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: romana
@@ -92,7 +94,7 @@ spec:
       hostNetwork: true
       containers:
       - name: romana-agent
-        image: quay.io/romana/agent:v0.9.8.1
+        image: cgilmour/romana-agent:v0.9.3.6
         imagePullPolicy: Always
         args:
         - --cluster-ip-cidr=10.96.0.0/12
