@@ -27,11 +27,71 @@ sudo apt-get install -y kubeadm
 sudo kubeadm join --token=<token> <ip-address>
 ```
 
+## Installing kubectl 1.5 Beta
+```bash
+# kubectl still defaults to the default set by kubeadm
+# thus we need to install the latest beta manually.
+wget https://storage.googleapis.com/kubernetes-release/release/v1.5.0-beta.2/bin/linux/amd64/kubectl
+sudo chown --reference=/usr/bin/kubectl kubectl
+sudo chmod --reference=/usr/bin/kubectl kubectl
+sudo mv kubectl /usr/bin/kubectl
+# now use kubectl version to see if client and server are both
+# of same version.
+kubectl version
+```
+
 ## Installing Romana
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/pritesh/romana/tw/containerize/kubeadm-install/romana.yml
 ```
+
+## Testing if the install is working
+```bash
+# First try checking the pods and see if all of them
+# come up properly and are in running state. You may
+# want to wait few minutes before it settles, there
+# may be some restarts but eventually it does come up.
+kubectl get pods -a -o wide --all-namespaces
+
+# once all pods are up, try installing cirros and see
+# if it comes up and if dns works correctly.
+kubectl run cirros --image=cirros --replicas=4
+
+# check if the cirros pods are running
+kubectl get pods -a -o wide 
+
+# once they are running login into them using
+kubectl exec -it <pod-name> /bin/sh
+
+# once inside the pod, use nslookup to test dns
+nslookup kubernetes.default
+# the result would be as follows:
+#Server:    10.96.0.10
+#Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+#
+#Name:      kubernetes.default
+#Address 1: 10.96.0.1 kubernetes.default.svc.cluster.local
+
+nslookup cirros-4036794762-9s46o
+#Server:    10.96.0.10
+#Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+#
+#Name:      cirros-4036794762-9s46o
+#Address 1: 100.112.11.131 cirros-4036794762-9s46o
+
+```
+
+### Removing kubernetes beta install.
+```bash
+# On Controller and all nodes, run following command
+# to reset your cluster to what it was before installing
+# kubernetes
+# BEWARE, YOU WILL LOSE ALL YOUR PODS/SERVICES/DATA/etc.
+sudo kubeadm reset
+```
+
+Currently it pulls images from dockers and depends on kubeadm for setup which needs external repos for installation.
 
 ### Limitations
 
