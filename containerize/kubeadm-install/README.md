@@ -112,6 +112,11 @@ curl 192.168.99.10:80
 # You are all set and ready to roll.
 ```
 
+### Removing cirros and nginx deployments
+```bash
+kubectl delete deployments nginx cirros
+```
+
 ### Removing kubernetes beta install.
 ```bash
 # On Controller and all nodes, run following command
