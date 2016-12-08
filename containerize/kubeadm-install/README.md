@@ -82,6 +82,36 @@ nslookup cirros-4036794762-9s46o
 
 ```
 
+## Bringup and Expose service to external world
+```bash
+# bringup nginx with 2 replicas on port 80.
+kubectl run nginx --image=nginx --replicas=2 --port=80
+
+# Check if the pods are up else wait few seconds for them
+# to start, when desired and current columns both show
+# correct number of replicas,  it means nginx is up and
+# running correctly.
+kubectl get deployments --all-namespaces
+
+# Now expose the service to outside world.
+kubectl expose deployment nginx --port=80 --type=LoadBalancer --external-ip=192.168.99.10
+
+# Check if the configuration was applied correctly, if
+# it was, then external IP should be reflected using
+# following command.
+kubectl get services --all-namespaces -o wide
+
+# Test if nginx is up and running
+curl 192.168.99.10:80
+#<!DOCTYPE html>
+#<html>
+#<head>
+#<title>Welcome to nginx!</title>
+#<snip>...
+
+# You are all set and ready to roll.
+```
+
 ### Removing kubernetes beta install.
 ```bash
 # On Controller and all nodes, run following command
