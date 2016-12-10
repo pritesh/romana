@@ -23,12 +23,11 @@ spec:
         - name: db-path
           mountPath: /var/lib/mysql
       - name: romana-services
-        image: cgilmour/romana-services:v0.9.3.6
+        image: cgilmour/romana-services:release-v0.9.3
         imagePullPolicy: Always
         args:
-        - --cidr=100.112.0.0/16
-        - --namespaces=2
-        - --segments=2
+        - --cidr=10.0.0.0/10
+        - --interface=eth0
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: romana
@@ -43,7 +42,6 @@ metadata:
   name: romana-root
   namespace: kube-system
 spec:
-  clusterIP: 10.99.99.99
   ports:
   - name: root
     port: 9600
@@ -68,12 +66,12 @@ spec:
       hostNetwork: true
       containers:
       - name: romana-agent
-        image: cgilmour/romana-agent:v0.9.3.6
+        image: cgilmour/romana-agent:release-v0.9.3
         imagePullPolicy: Always
         args:
-        - --romana-root=http://10.99.99.99:9600
-        - --cluster-ip-cidr=10.96.0.0/16
-        - --cni-image=cgilmour/romana-cni:v0.9.3.6
+        - --romana-root=http://192.168.99.10:9600
+        - --cluster-ip-cidr=10.128.0.0/10
+        - --cni-image=cgilmour/romana-cni:release-v0.9.3
         - --interface=eth0
         securityContext:
           privileged: true
