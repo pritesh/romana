@@ -55,6 +55,16 @@ new clusterIP Range.
 sudo sed -i.bak 's/--service-cluster-ip-range=*.*\"/--service-cluster-ip-range=10.112.0.0\/12\"/' /etc/kubernetes/manifests/kube-apiserver.json
 ```
 
+## Scheduling Pods on Kubernetes master
+
+Removing taint from kubernetes master allows scheduling pods on master.
+This is useful when single node is present.
+
+```bash
+kubectl taint nodes <node name> dedicated:NoSchedule-
+```
+
+
 ## Testing if the install is working
 ```bash
 # First try checking the pods and see if all of them
