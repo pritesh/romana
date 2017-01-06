@@ -46,6 +46,15 @@ kubectl version
 kubectl apply -f https://raw.githubusercontent.com/pritesh/romana/tw/containerize/kubeadm-install/romana.yml
 ```
 
+## Changing Kubernetes ClusterIP Range
+
+Kurbernetes will change the clusterIP Range if manifest for kube-apiserver
+is changed, so following line does the trick, where 10.112.0.0/12 is the
+new clusterIP Range.
+```bash
+sudo sed -i.bak 's/--service-cluster-ip-range=*.*\"/--service-cluster-ip-range=10.112.0.0\/12\"/' /etc/kubernetes/manifests/kube-apiserver.json
+```
+
 ## Testing if the install is working
 ```bash
 # First try checking the pods and see if all of them
@@ -125,8 +134,6 @@ kubectl delete deployments nginx cirros
 # BEWARE, YOU WILL LOSE ALL YOUR PODS/SERVICES/DATA/etc.
 sudo kubeadm reset
 ```
-
-Currently it pulls images from dockers and depends on kubeadm for setup which needs external repos for installation.
 
 ### Limitations
 
