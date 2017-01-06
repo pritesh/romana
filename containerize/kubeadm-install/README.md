@@ -27,11 +27,11 @@ sudo apt-get install -y kubeadm
 sudo kubeadm join --token=<token> <ip-address>
 ```
 
-## Installing kubectl 1.5 Beta
+## Installing kubectl 1.5
 ```bash
 # kubectl still defaults to the default set by kubeadm
-# thus we need to install the latest beta manually.
-wget https://storage.googleapis.com/kubernetes-release/release/v1.5.0-beta.2/bin/linux/amd64/kubectl
+# thus we need to install the latest version manually.
+wget https://storage.googleapis.com/kubernetes-release/release/v1.5.1/bin/linux/amd64/kubectl
 sudo chown --reference=/usr/bin/kubectl kubectl
 sudo chmod --reference=/usr/bin/kubectl kubectl
 sudo mv kubectl /usr/bin/kubectl
@@ -117,7 +117,7 @@ curl 192.168.99.10:80
 kubectl delete deployments nginx cirros
 ```
 
-### Removing kubernetes beta install.
+### Removing kubernetes install.
 ```bash
 # On Controller and all nodes, run following command
 # to reset your cluster to what it was before installing
