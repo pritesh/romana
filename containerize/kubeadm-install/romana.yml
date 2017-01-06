@@ -24,7 +24,7 @@ spec:
           mountPath: /var/lib/mysql
       - name: romana-services
         image: cgilmour/romana-services:release-v0.9.3
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args:
         - --cidr=10.0.0.0/10
         - --interface=eth0
@@ -73,7 +73,7 @@ spec:
       containers:
       - name: romana-agent
         image: cgilmour/romana-agent:release-v0.9.3
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args:
         - --romana-root=http://192.168.99.10:9600
         - --cluster-ip-cidr=10.128.0.0/10
