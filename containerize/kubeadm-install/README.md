@@ -1,4 +1,4 @@
-# Step to install Kubernetes 1.5 Beta with Romana
+# Step to install Kubernetes 1.5.1 with Romana
 
 ## Installing Kubernetes
 
@@ -11,7 +11,7 @@ EOF
 sudo apt-get update
 sudo apt-get install -y docker.io
 sudo apt-get install -y kubeadm
-sudo kubeadm init --use-kubernetes-version v1.5.0-beta.2
+sudo kubeadm init --use-kubernetes-version v1.5.1
 # now you would get something like this at the end:
 # kubeadm join --token=<token> <ip-address>
 
