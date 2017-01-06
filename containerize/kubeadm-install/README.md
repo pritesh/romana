@@ -147,4 +147,8 @@ sudo kubeadm reset
 
 ### Limitations
 
-Currently it pulls images from dockers and depends on kubeadm for setup which needs external repos for installation.
+* Currently it pulls images from dockers and depends on kubeadm
+for setup which needs external repos for installation.
+* If changes to manifests in `/etc/kubernetes/manifests/` are made
+before CNI plugin is installed then kube-api-server fails to come
+up.
