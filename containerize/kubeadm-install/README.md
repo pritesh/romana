@@ -64,6 +64,11 @@ This is useful when single node is present.
 kubectl taint nodes <node name> dedicated:NoSchedule-
 ```
 
+## Changing/Adding labels to nodes by patching it.
+
+```bash
+kubectl patch node <node name> -p '{"metadata":{"labels":{"kubeadm.alpha.kubernetes.io/role": "master"}}}'
+````
 
 ## Testing if the install is working
 ```bash
