@@ -149,6 +149,12 @@ kubectl delete deployments nginx cirros
 # BEWARE, YOU WILL LOSE ALL YOUR PODS/SERVICES/DATA/etc.
 sudo kubeadm reset
 ```
+### Deleting All docker Containers and Images
+
+```bash
+sudo docker rm $(sudo docker ps -a -q)
+sudo docker rmi $(sudo docker images -a -q)
+````
 
 ### Limitations
 
