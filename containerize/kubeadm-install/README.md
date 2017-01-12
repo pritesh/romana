@@ -156,6 +156,12 @@ sudo docker rm $(sudo docker ps -a -q)
 sudo docker rmi $(sudo docker images -a -q)
 ````
 
+### Find the kubeadm token for new nodes to join the clsuter
+
+```bash
+kubectl -n kube-system get secret clusterinfo -o yaml | grep token-map | awk '{print $2}' | base64 -d | sed "s|{||g;s|}||g;s|:|.|g;s/\"//g;" | xargs echo
+````
+
 ### Limitations
 
 * Currently it pulls images from dockers and depends on kubeadm
