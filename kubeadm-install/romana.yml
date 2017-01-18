@@ -11,7 +11,7 @@ spec:
         app: romana-services
     spec:
       nodeSelector:
-        kubernetes.io/hostname: ip-192-168-99-10
+        kubeadm.alpha.kubernetes.io/role: master
       hostNetwork: true
       containers:
       - name: romana-datastore
@@ -23,11 +23,13 @@ spec:
         - name: db-path
           mountPath: /var/lib/mysql
       - name: romana-services
-        image: cgilmour/romana-services:release-v0.9.3
+        image: pani/romana-services
         imagePullPolicy: IfNotPresent
         args:
-        - --cidr=10.0.0.0/10
+        - --cidr=100.112.0.0/16
         - --interface=eth0
+        - --namespaces=32
+        - --segments=2
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: romana
@@ -48,6 +50,7 @@ metadata:
   name: romana-root
   namespace: kube-system
 spec:
+  clusterIP: 10.99.99.99
   ports:
   - name: root
     port: 9600
@@ -72,12 +75,12 @@ spec:
       hostNetwork: true
       containers:
       - name: romana-agent
-        image: cgilmour/romana-agent:release-v0.9.3
+        image: pani/romana-agent
         imagePullPolicy: IfNotPresent
         args:
-        - --romana-root=http://192.168.99.10:9600
-        - --cluster-ip-cidr=10.128.0.0/10
-        - --cni-image=cgilmour/romana-cni:release-v0.9.3
+        - --romana-root=http://10.99.99.99:9600
+        - --cluster-ip-cidr=10.96.0.0/12
+        - --cni-image=pani/romana-cni
         - --interface=eth0
         securityContext:
           privileged: true
