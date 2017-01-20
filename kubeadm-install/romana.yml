@@ -41,7 +41,7 @@ spec:
         - name: mysql-data
           mountPath: /var/lib/mysql
       - name: romana-services
-        image: pani/romana-services:v0.9.8.1
+        image: pani/romana-services
         imagePullPolicy: Always
         args:
         - --cidr=100.112.0.0/12
@@ -95,11 +95,11 @@ spec:
       hostNetwork: true
       containers:
       - name: romana-agent
-        image: pani/romana-agent:v0.9.8.1
+        image: pani/romana-agent
         imagePullPolicy: Always
         args:
         - --cluster-ip-cidr=10.96.0.0/12
-        - --cni-image=pani/romana-cni:v0.9.8.1
+        - --cni-image=pani/romana-cni
         - --interface=enp0s25
         securityContext:
           privileged: true
