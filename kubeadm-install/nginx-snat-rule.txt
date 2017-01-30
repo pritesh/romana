@@ -1,0 +1,2 @@
+sudo iptables -t nat -A POSTROUTING -o enp0s25 -j SNAT --to 10.6.6.103
+sudo iptables -t nat -A POSTROUTING -d 10.6.6.0/24 -j SNAT --to 10.6.6.103
