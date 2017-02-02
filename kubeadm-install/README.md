@@ -43,7 +43,7 @@ kubectl version
 ## Installing Romana
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/pritesh/romana/tw/containerize/kubeadm-install/romana.yml
+kubectl apply -f https://raw.githubusercontent.com/pritesh/romana/tw/kubeadm-install/romana.yml
 ```
 
 ## Changing Kubernetes ClusterIP Range
