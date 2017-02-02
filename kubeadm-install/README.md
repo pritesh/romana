@@ -1,4 +1,4 @@
-# Step to install Kubernetes 1.5.1 with Romana
+# Step to install Kubernetes 1.5.2 with Romana
 
 ## Installing Kubernetes
 
@@ -11,7 +11,7 @@ EOF
 sudo apt-get update
 sudo apt-get install -y docker.io
 sudo apt-get install -y kubeadm
-sudo kubeadm init --use-kubernetes-version v1.5.1
+sudo kubeadm init --use-kubernetes-version v1.5.2
 # now you would get something like this at the end:
 # kubeadm join --token=<token> <ip-address>
 
@@ -31,7 +31,7 @@ sudo kubeadm join --token=<token> <ip-address>
 ```bash
 # kubectl still defaults to the default set by kubeadm
 # thus we need to install the latest version manually.
-wget https://storage.googleapis.com/kubernetes-release/release/v1.5.1/bin/linux/amd64/kubectl
+wget https://storage.googleapis.com/kubernetes-release/release/v1.5.2/bin/linux/amd64/kubectl
 sudo chown --reference=/usr/bin/kubectl kubectl
 sudo chmod --reference=/usr/bin/kubectl kubectl
 sudo mv kubectl /usr/bin/kubectl
@@ -61,7 +61,7 @@ Removing taint from kubernetes master allows scheduling pods on master.
 This is useful when single node is present.
 
 ```bash
-kubectl taint nodes <node name> dedicated:NoSchedule-
+kubectl taint nodes --all dedicated:NoSchedule-
 ```
 
 ## Changing/Adding labels to nodes by patching it.
