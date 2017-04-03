@@ -162,6 +162,12 @@ sudo docker rmi $(sudo docker images -a -q)
 kubectl -n kube-system get secret clusterinfo -o yaml | grep token-map | awk '{print $2}' | base64 -d | sed "s|{||g;s|}||g;s|:|.|g;s/\"//g;" | xargs echo
 ````
 
+### Copy file form pod to host
+
+```bash
+sudo docker cp `kubectl get pods -a -o wide --all-namespaces --selector=app=<name> -o   jsonpath='{.items[*].status.containerStatuses[1].containerID}'| cut -d"/" -f3 | cut -c1-30`:/usr/local/bin/<file> /usr/local/bin/<file>
+````
+
 ### Limitations
 
 * Currently it pulls images from dockers and depends on kubeadm
