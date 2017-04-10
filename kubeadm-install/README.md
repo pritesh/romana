@@ -60,8 +60,14 @@ sudo sed -i.bak 's/--service-cluster-ip-range=*.*\"/--service-cluster-ip-range=1
 Removing taint from kubernetes master allows scheduling pods on master.
 This is useful when single node is present.
 
+** Pre Kubernetes 1.6 **
 ```bash
 kubectl taint nodes --all dedicated:NoSchedule-
+```
+
+** Kubernetes 1.6+ **
+```bash
+kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
 ```
 
 ## Changing/Adding labels to nodes by patching it.
